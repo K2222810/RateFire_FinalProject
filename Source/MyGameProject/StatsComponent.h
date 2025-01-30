@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+/*// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -27,7 +27,7 @@ public:
 	UStatsComponent();
 
 	UPROPERTY(EditAnywhere)
-	TMap<TEnumAsByte<EStat>, float> Stats;
+	//TMap<TEnumAsByte<EStat>, float> Stats;
 
 
 protected:
@@ -52,3 +52,4 @@ public:
 
 
 };
+*/

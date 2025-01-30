@@ -2,14 +2,3 @@
 
 
 #include "UBossAnimInstance.h"
-
-void UUBossAnimInstance::UpdateSpeed()
-{
-	APawn* PawnRef{ TryGetPawnOwner() };
-
-	if (!IsValid(PawnRef)) { return; }
-
-	FVector Velocity{ PawnRef->GetVelocity() };
-
-	CurrentSpeed = static_cast<float>(Velocity.Length());
-}
