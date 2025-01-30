@@ -22,4 +22,10 @@ class MYGAMEPROJECT_API IEnemy
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnSelect();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnDeselect();
+
 };

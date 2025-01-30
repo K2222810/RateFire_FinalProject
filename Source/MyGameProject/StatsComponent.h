@@ -12,17 +12,43 @@ class MYGAMEPROJECT_API UStatsComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+
+	UPROPERTY(EditAnywhere)
+	double StaminaRegenRate{ 10.0 };
+
+	UPROPERTY(VisibleAnywhere)
+	bool bCanRegen{ true };
+
+	UPROPERTY(EditAnywhere)
+	float StaminaDelayDuration{ 2.0f };
+
+public:
 	// Sets default values for this component's properties
 	UStatsComponent();
+
+	UPROPERTY(EditAnywhere)
+	TMap<TEnumAsByte<EStat>, float> Stats;
+
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UFUNCTION(BlueprintCallable)
+	void ReduceHealth(float Amount);
+
+	UFUNCTION(BlueprintCallable)
+	void ReducedStamina(float Amount);
+
+	UFUNCTION(BlueprintCallable)
+	void RegenStamina();
+
+	UFUNCTION()
+	void EnableRegen();
+
+
 };
