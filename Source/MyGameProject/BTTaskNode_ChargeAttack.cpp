@@ -1,7 +1,7 @@
 #include "BTTaskNode_ChargeAttack.h"
 #include "AIController.h"
 #include "GameFramework/Character.h"
-#include "BossAnimInstance.h"
+#include "UBossAnimInstance.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -39,12 +39,10 @@ UBTTaskNode_ChargeAttack::UBTTaskNode_ChargeAttack()
 		this, "HandleMoveCompleted"
 	);
 
-
 }
 
 EBTNodeResult::Type UBTTaskNode_ChargeAttack::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
 {
-
 	ControllerRef = OwnerComp.GetAIOwner();
 	CharacterRef = ControllerRef->GetCharacter();
 	BossAnim = Cast<UUBossAnimInstance>(
@@ -61,9 +59,6 @@ EBTNodeResult::Type UBTTaskNode_ChargeAttack::ExecuteTask(UBehaviorTreeComponent
 	bIsFinished = false;
 
 	return EBTNodeResult::InProgress;
-
-
-
 }
 
 void UBTTaskNode_ChargeAttack::ChargeAtPlayer()

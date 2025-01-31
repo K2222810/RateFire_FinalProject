@@ -12,17 +12,22 @@ class MYGAMEPROJECT_API ULookAtPlayerComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+	UPROPERTY(EditAnywhere)
+	float Speed{ 400.0f };
+
+public:
 	// Sets default values for this component's properties
 	ULookAtPlayerComponent();
+
+	UPROPERTY(VisibleAnywhere)
+	bool bCanRotate{ false };
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 		
 };

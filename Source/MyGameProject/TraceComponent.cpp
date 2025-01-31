@@ -117,9 +117,6 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 		TargetsToIgnore.AddUnique(TargetActor);
 	}
-
-
-
 	// ...
 }
 

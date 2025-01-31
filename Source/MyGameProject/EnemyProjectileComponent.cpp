@@ -2,6 +2,7 @@
 
 
 #include "EnemyProjectileComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 
 // Sets default values for this component's properties
 UEnemyProjectileComponent::UEnemyProjectileComponent()
@@ -13,14 +14,13 @@ UEnemyProjectileComponent::UEnemyProjectileComponent()
 	// ...
 }
 
-
 // Called when the game starts
 void UEnemyProjectileComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	// ...
-	
+
 }
 
 
@@ -32,3 +32,30 @@ void UEnemyProjectileComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 	// ...
 }
 
+void UEnemyProjectileComponent::SpawnProjectile(FName ComponentName, TSubclassOf<AActor> ProjectileClass)
+{
+	USceneComponent* SpawnPointComp{
+		Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(ComponentName))
+	};
+
+	FVector SpawnLocation{ SpawnPointComp->GetComponentLocation() };
+
+	FVector PlayerLocation{ GetWorld()->GetFirstPlayerController()
+		->GetPawn()
+		->GetActorLocation()
+	};
+
+	FRotator SpawnRotation{
+		UKismetMathLibrary::FindLookAtRotation(
+			SpawnLocation, PlayerLocation
+		)
+	};
+
+	GetWorld()->SpawnActor(
+		ProjectileClass,
+		&SpawnLocation,
+		&SpawnRotation
+	);
+
+
+}

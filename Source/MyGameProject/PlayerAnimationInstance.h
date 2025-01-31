@@ -13,5 +13,22 @@ UCLASS()
 class MYGAMEPROJECT_API UPlayerAnimationInstance : public UAnimInstance
 {
 	GENERATED_BODY()
-	
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float CurrentVelocity{ 0.0f };
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateVelocity();
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool bIsInCombat{ false };
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float CurrentDirection{ 0.0f };
+
+public:
+	UFUNCTION(BlueprintCallable)
+	void HandleUpdatedTarget(AActor* NewTargetActorRef);
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateDirection();
 };
