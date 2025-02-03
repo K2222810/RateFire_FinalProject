@@ -2,6 +2,11 @@
 
 
 #include "LockOn.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Enemy.h"
 
 // Sets default values for this component's properties
 ULockOn::ULockOn()

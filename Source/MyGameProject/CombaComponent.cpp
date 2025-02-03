@@ -1,7 +1,7 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "CombaComponent.h"
+#include "GameFramework/Character.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "MainCharacter.h"
 
 // Sets default values for this component's properties
 UCombaComponent::UCombaComponent()
@@ -19,8 +19,9 @@ void UCombaComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	CharacterRef = GetOwner<ACharacter>();
 	// ...
-	
+
 }
 
 
@@ -32,3 +33,38 @@ void UCombaComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	// ...
 }
 
+void UCombaComponent::ComboAttack()
+{
+	if (CharacterRef->Implements<UMainCharacter>())
+	{
+		IMainCharacter* IPlayerRef{ Cast<IMainCharacter>(CharacterRef) };
+
+		if (IPlayerRef && !IPlayerRef->HasEnoughStamina(StaminaCost))
+		{
+			return;
+		}
+	}
+
+	if (!bPlayerCanAttack) { return; }
+
+	bPlayerCanAttack = false;
+
+	CharacterRef->PlayAnimMontage(AttackAnimation[ComboCounter]);
+
+	ComboCounter++;
+
+	int MaxCombo{ AttackAnimation.Num() };
+
+	ComboCounter = UKismetMathLibrary::Wrap(
+		ComboCounter,
+		-1,
+		(MaxCombo - 1)
+	);
+
+	OnAttackPerformedDelegate.Broadcast(StaminaCost);
+}
+
+void UCombaComponent::HandleResetAttack()
+{
+	bPlayerCanAttack = true;
+}

@@ -11,7 +11,14 @@ class MYGAMEPROJECT_API AEnemyProjectileActor : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* HitTemplate;
+
+	UPROPERTY(EditAnywhere)
+	float Damage{ 10.0f };
+
+
+public:
 	// Sets default values for this actor's properties
 	AEnemyProjectileActor();
 
@@ -19,8 +26,15 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+
+	UFUNCTION(BlueprintCallable)
+	void HandleBeginOverlap(AActor* OtherActor);
+
+	UFUNCTION()
+	void DestroyProjectile();
 
 };

@@ -1,4 +1,3 @@
-/*
 
 #include "StatsComponent.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -89,4 +88,3 @@ void UStatsComponent::EnableRegen()
 	bCanRegen = true;
 
 }
-*/
