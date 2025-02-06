@@ -2,6 +2,7 @@
 
 
 #include "PlayerAnimationInstance.h"
+#include "Kismet/KismetMathLibrary.h" 
 
 void UPlayerAnimationInstance::UpdateVelocity()
 {
@@ -29,10 +30,15 @@ void UPlayerAnimationInstance::UpdateDirection()
 
 	if (!IsValid(PawnRef)) { return; }
 
-	if (!bIsInCombat) { return; }
+	// if (!bIsInCombat) { return; }
 
-	CurrentDirection = CalculateDirection(
-		PawnRef->GetVelocity(),
-		PawnRef->GetActorRotation()
-	);
+	FVector Velocity{ PawnRef->GetVelocity() };
+
+	FTransform ActorTransform { PawnRef->GetActorTransform() };
+	
+	FVector LocalDirection = ActorTransform.InverseTransformVector(Velocity);
+
+	FRotator Rotation = UKismetMathLibrary::MakeRotFromX(LocalDirection);
+
+	CurrentDirection = Rotation.Yaw;
 }

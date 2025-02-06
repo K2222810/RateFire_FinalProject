@@ -15,8 +15,15 @@ class MYGAMEPROJECT_API UUBossAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float CurrentSpeed{ 0.0f };
+	float CurrentVelocity{ 0.0f };
+
+
+	UFUNCTION(BlueprintCallable)
+	void UpdateVelocity();
+
+
 public:
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsCharging{ false };
 
