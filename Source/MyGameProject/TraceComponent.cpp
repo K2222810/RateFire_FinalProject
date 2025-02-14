@@ -65,7 +65,7 @@ void UTraceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 		StartSocketLocation,
 		EndSocketLocation,
 		ShapeRotation,
-		ECollisionChannel::ECC_GameTraceChannel1,
+		ECollisionChannel::ECC_GameTraceChannel3,
 		Box,
 		IgnoreParams
 	) };

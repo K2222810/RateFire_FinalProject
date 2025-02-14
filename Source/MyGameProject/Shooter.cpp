@@ -7,7 +7,15 @@
 #include "Components/CapsuleComponent.h"
 #include "SimplehooterGameMode.h"
 #include "Math/UnrealMathUtility.h"
-
+#include "PlayerAnimationInstance.h"
+#include "StatsComponent.h"
+#include "EStat.h"
+#include "AimComponent.h"
+#include "LockOn.h"
+#include "CombaComponent.h"
+#include "TraceComponent.h"
+#include "BlockComponent.h"
+#include "PlayerActionsComponent.h"
 
 // Sets default values
 AShooter::AShooter()
@@ -15,6 +23,16 @@ AShooter::AShooter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	AimComp = CreateDefaultSubobject<UAimComponent>(TEXT("Aim Component"));
+	LockonComp = CreateDefaultSubobject<ULockOn>(TEXT("Lockon Component"));
+	TraceComp = CreateDefaultSubobject<UTraceComponent>(TEXT("Trace Component"));
+	CombatComp = CreateDefaultSubobject<UCombaComponent>(TEXT("Combat Component"));
+
+	StatsComp = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
+	BlockComp = CreateDefaultSubobject<UBlockComponent>(TEXT("Block Component"));
+	PlayerActionsComp = CreateDefaultSubobject<UPlayerActionsComponent>(TEXT("Player Actions Component"));
+	
+	
 }
 
 // Called when the game starts or when spawned
@@ -149,20 +167,17 @@ float  AShooter::GetHealthPercent() const
 } 
 
 
-/*
-void AShooter::LookRight(float AxisValue)
-{
+// Called every frame
+float AShooter::GetDamage()
+{	
 
-	AddControllerYawInput(AxisValue);
-
+	return StatsComp->Stats[EStat::Strength];
+	
 }
-*/
 
-
-/*
-void AShooter::LookUp(float AxisValue)
+bool AShooter::HasEnoughStamina(float Cost)
 {
-
-	AddControllerPitchInput(AxisValue);
+	return StatsComp->Stats[EStat::Stamina] >= Cost;
 }
-*/
+
+

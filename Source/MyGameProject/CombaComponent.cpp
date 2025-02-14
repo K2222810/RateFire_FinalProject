@@ -34,7 +34,8 @@ void UCombaComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 }
 
 void UCombaComponent::ComboAttack()
-{
+{	
+
 	if (CharacterRef->Implements<UMainCharacter>())
 	{
 		IMainCharacter* IPlayerRef{ Cast<IMainCharacter>(CharacterRef) };
@@ -48,8 +49,10 @@ void UCombaComponent::ComboAttack()
 	if (!bPlayerCanAttack) { return; }
 
 	bPlayerCanAttack = false;
-
+	
 	CharacterRef->PlayAnimMontage(AttackAnimation[ComboCounter]);
+
+
 
 	ComboCounter++;
 

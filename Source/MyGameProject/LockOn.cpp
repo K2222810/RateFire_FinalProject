@@ -120,6 +120,7 @@ void ULockOn::StopLockon()
 
 	OnUpdatedTargetDelegate.Broadcast(CurrentTargetActor);
 
+
 }
 
 void ULockOn::ToggleLockon(float Radius)

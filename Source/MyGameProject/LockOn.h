@@ -7,18 +7,11 @@
 #include "LockOn.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
-	// Name of the event 
 	FOnUpdatedTargetSignature,
-	// the class contains the variable
-	ULockOn,
-	// Variable name
-	OnUpdatedTargetDelegate,
-	// Type of varaible
-	AActor*,
-	// Name of the parameter
-	NewTargetActorRef
-
+	ULockOn, OnUpdatedTargetDelegate,
+	AActor*, NewTargetActorRef
 );
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -41,6 +34,7 @@ public:
 
 	UPROPERTY(BlueprintAssignable)
 	FOnUpdatedTargetSignature OnUpdatedTargetDelegate;
+
 
 protected:
 	// Called when the game starts
