@@ -40,8 +40,6 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UPlayerActionsComponent* PlayerActionsComp;
 
-	
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -80,13 +78,6 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Sensitivity")
 	float RotationRate = 10;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Stats")
-	float MaxHealth = 100;
-
-
-	UPROPERTY(EditDefaultsOnly, Category = "Stats")
-	float Health;
-
 	UPROPERTY()
 	AGun* CurrentGun[3];
 	
@@ -97,7 +88,10 @@ public:
 	TSubclassOf<AGun> GunClass[3];
 
 
+	
+
 	virtual float GetDamage() override;
+
 
 	virtual bool HasEnoughStamina(float Cost) override;
 

@@ -20,7 +20,7 @@
 // Sets default values
 AShooter::AShooter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
 	AimComp = CreateDefaultSubobject<UAimComponent>(TEXT("Aim Component"));
@@ -31,14 +31,13 @@ AShooter::AShooter()
 	StatsComp = CreateDefaultSubobject<UStatsComponent>(TEXT("Stats Component"));
 	BlockComp = CreateDefaultSubobject<UBlockComponent>(TEXT("Block Component"));
 	PlayerActionsComp = CreateDefaultSubobject<UPlayerActionsComponent>(TEXT("Player Actions Component"));
-	
-	
+
+
 }
 
 // Called when the game starts or when spawned
 void AShooter::BeginPlay()
 {
-	Health = MaxHealth;
 
 	Super::BeginPlay();
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
@@ -46,30 +45,34 @@ void AShooter::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("ActiveIndex = %d"), ActiveIndex);
 	for (int32 Index = 0; Index < 3; Index++)
 	{
-    	CurrentGun[Index] = GetWorld()->SpawnActor<AGun>(GunClass[Index]);
+		CurrentGun[Index] = GetWorld()->SpawnActor<AGun>(GunClass[Index]);
 
-    	if (CurrentGun[Index])
-    	{
-        	CurrentGun[Index]->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
-        	CurrentGun[Index]->SetOwner(this);
-        	UE_LOG(LogTemp, Warning, TEXT("Attached mesh number %d"), Index);
+		if (CurrentGun[Index])
+		{
+			CurrentGun[Index]->AttachToComponent(GetMesh(), FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));
+			CurrentGun[Index]->SetOwner(this);
+			UE_LOG(LogTemp, Warning, TEXT("Attached mesh number %d"), Index);
 
-        if (Index != ActiveIndex)
-        {
-            CurrentGun[Index]->SetActorHiddenInGame(true);
-        }
-    }
-    else
-    {
-        UE_LOG(LogTemp, Warning, TEXT("No gun attached on %d"), Index);
-    }
-}
-	
+			if (Index != ActiveIndex)
+			{
+				CurrentGun[Index]->SetActorHiddenInGame(true);
+			}
+		}
+		else
+		{
+			UE_LOG(LogTemp, Warning, TEXT("No gun attached on %d"), Index);
+		}
+	}
+
 }
 
 bool AShooter::IsDead() const
 {
-	return Health <= 0;
+	if (StatsComp->Stats[EStat::Health] <= 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 
@@ -96,24 +99,21 @@ void AShooter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("SwitchingWeapons"), this, &AShooter::SwapUp);
 }
 
-float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const &DamageEvent, class AController *EventInstigator, AActor *DamageCauser) 
+float AShooter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
 	float DamageToApply = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
-	DamageToApply = FMath::Min(Health, DamageToApply);
-	Health -= DamageToApply;
-	UE_LOG(LogTemp, Warning, TEXT("Health left %f"), Health);
-
+	DamageToApply = FMath::Min(StatsComp->Stats[EStat::Health], DamageToApply);
 	if (IsDead())
-	{	
-		
-		ASimplehooterGameMode *GameMode = GetWorld()->GetAuthGameMode<ASimplehooterGameMode>();
-		if(GameMode != nullptr)
+	{
+
+		ASimplehooterGameMode* GameMode = GetWorld()->GetAuthGameMode<ASimplehooterGameMode>();
+		if (GameMode != nullptr)
 		{
 			GameMode->PawnKilled(this);
 		}
 		DetachFromControllerPendingDestroy();
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-		
+
 	}
 
 	return DamageToApply;
@@ -140,7 +140,7 @@ void AShooter::LookUpRate(float AxisValue)
 	AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
 }
 
-void AShooter::LookRightRate(float AxisValue) 
+void AShooter::LookRightRate(float AxisValue)
 {
 	AddControllerYawInput(AxisValue * RotationRate * GetWorld()->GetDeltaSeconds());
 }
@@ -151,33 +151,32 @@ void AShooter::Shoot()
 }
 
 void AShooter::SwapUp(float Slot)
-{	
+{
 	int32 SlotIndex = static_cast<int32>(Slot);
-    CurrentGun[ActiveIndex]->SetActorHiddenInGame(true);
-    ActiveIndex += SlotIndex;
-    ActiveIndex = FMath::Clamp(ActiveIndex, 0, 2);
-    CurrentGun[ActiveIndex]->SetActorHiddenInGame(false);
+	CurrentGun[ActiveIndex]->SetActorHiddenInGame(true);
+	ActiveIndex += SlotIndex;
+	ActiveIndex = FMath::Clamp(ActiveIndex, 0, 2);
+	CurrentGun[ActiveIndex]->SetActorHiddenInGame(false);
 
 }
 
 
 float  AShooter::GetHealthPercent() const
 {
-	return Health / MaxHealth; 
-} 
+	return StatsComp->Stats[EStat::Health] / StatsComp->Stats[EStat::MaxHealth];
+}
 
 
 // Called every frame
 float AShooter::GetDamage()
-{	
+{
 
 	return StatsComp->Stats[EStat::Strength];
-	
+
 }
 
 bool AShooter::HasEnoughStamina(float Cost)
 {
 	return StatsComp->Stats[EStat::Stamina] >= Cost;
 }
-
 

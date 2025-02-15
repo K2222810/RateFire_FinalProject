@@ -45,6 +45,9 @@ public:
 	void ReducedStamina(float Amount);
 
 	UFUNCTION(BlueprintCallable)
+	float GiveMaxHealth() const;
+
+	UFUNCTION(BlueprintCallable)
 	void RegenStamina();
 
 	UFUNCTION()

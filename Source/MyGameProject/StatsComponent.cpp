@@ -88,3 +88,11 @@ void UStatsComponent::EnableRegen()
 	bCanRegen = true;
 
 }
+
+
+float UStatsComponent::GiveMaxHealth() const
+{
+	UE_LOG(LogTemp, Warning, TEXT("Hello, World!"));
+	return Stats[EStat::MaxHealth];
+
+}
