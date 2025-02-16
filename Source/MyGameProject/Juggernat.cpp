@@ -20,8 +20,9 @@ AJuggernat::AJuggernat()
 
 // Called when the game starts or when spawned
 void AJuggernat::BeginPlay()
-{	/*
+{	
 	Super::BeginPlay();
+
 
 	BlackboardComp = GetController<AAIController>()->GetBlackboardComponent();
 
@@ -29,7 +30,6 @@ void AJuggernat::BeginPlay()
 		TEXT("CurrentState"),
 		InitialState
 	);
-	*/
 
 }
 
@@ -50,7 +50,8 @@ void AJuggernat::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 
 void AJuggernat::DetectPawn(APawn* PawnDetected, APawn* PawnCheck)
 {
-	/*
+
+
 	EEnemyState CurrentState{
 		static_cast<EEnemyState>(BlackboardComp->GetValueAsEnum(TEXT("CurrentState")))
 	};
@@ -61,7 +62,8 @@ void AJuggernat::DetectPawn(APawn* PawnDetected, APawn* PawnCheck)
 		TEXT("CurrentState"),
 		EEnemyState::Range
 	);
-	*/
+
+	
 
 
 }
