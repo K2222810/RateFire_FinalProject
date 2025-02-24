@@ -36,7 +36,7 @@ class MYGAMEPROJECT_API UPlayerActionsComponent : public UActorComponent
 	UPROPERTY(EditAnywhere)
 	float RollCost{ 5.0f };
 
-	bool bIsRollActive{ false };
+
 
 	UPROPERTY(EditAnywhere)
 	float SprintCost{ 0.1f };
@@ -76,5 +76,7 @@ public:
 
 	UFUNCTION()
 	void FinishRollAnim();
+
+	bool bIsRollActive{ false };
 
 };

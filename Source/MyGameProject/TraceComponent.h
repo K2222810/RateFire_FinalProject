@@ -27,6 +27,9 @@ class MYGAMEPROJECT_API UTraceComponent : public UActorComponent
 
 	TArray<AActor*> TargetsToIgnore;
 
+	UPROPERTY(EditAnywhere)
+	UParticleSystem* HitParticleTemplate;
+
 
 public:
 	// Sets default values for this component's properties
@@ -34,6 +37,10 @@ public:
 
 	UPROPERTY(VisibleAnywhere)
 	bool bIsAttacking{ false };
+
+
+	UFUNCTION(BlueprintCallable)
+	void HandleResetAttack();
 
 protected:
 	// Called when the game starts
@@ -43,8 +50,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	UFUNCTION(BlueprintCallable)
-	void HandleResetAttack();
+
 
 		
 };

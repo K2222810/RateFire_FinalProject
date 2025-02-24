@@ -171,10 +171,17 @@ float  AShooter::GetStaminaPercent() const
 	return StatsComp->Stats[EStat::Stamina] / StatsComp->Stats[EStat::MaxStamina];
 }
 
-void AShooter::PlayHurtAnim()
+void AShooter::PlayHurtAnim(TSubclassOf<class UCameraShakeBase> CameraShakeTemplate)
 {
 
 	PlayAnimMontage(HurtAnimMontage);
+
+	if (CameraShakeTemplate)
+	{
+		GetController<APlayerController>()
+			->ClientStartCameraShake(CameraShakeTemplate);
+	}
+
 }
 
 // Called every frame
@@ -190,3 +197,8 @@ bool AShooter::HasEnoughStamina(float Cost)
 	return StatsComp->Stats[EStat::Stamina] >= Cost;
 }
 
+bool AShooter::CanTakeDamage(AActor* Opponent)
+{
+	if (PlayerActionsComp->bIsRollActive) { return false; }
+	return true;
+}

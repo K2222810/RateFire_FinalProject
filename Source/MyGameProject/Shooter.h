@@ -94,7 +94,7 @@ public:
 
 	
 	UFUNCTION(BlueprintCallable)
-	void PlayHurtAnim();
+	void PlayHurtAnim(TSubclassOf<class UCameraShakeBase> CameraShakeTemplate);
 
 
 	virtual float GetDamage() override;
@@ -102,6 +102,7 @@ public:
 
 	virtual bool HasEnoughStamina(float Cost) override;
 
+	virtual bool CanTakeDamage(AActor* Opponent) override;
 
 /*
 	UPROPERTY(EditAnywhere, Category = "Weapons")
