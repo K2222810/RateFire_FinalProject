@@ -43,6 +43,7 @@ void AShooter::BeginPlay()
 	GetMesh()->HideBoneByName(TEXT("weapon_r"), EPhysBodyOp::PBO_None);
 	ActiveIndex = 0;
 	UE_LOG(LogTemp, Warning, TEXT("ActiveIndex = %d"), ActiveIndex);
+
 	for (int32 Index = 0; Index < 3; Index++)
 	{
 		CurrentGun[Index] = GetWorld()->SpawnActor<AGun>(GunClass[Index]);
@@ -160,12 +161,21 @@ void AShooter::SwapUp(float Slot)
 
 }
 
-
 float  AShooter::GetHealthPercent() const
 {
 	return StatsComp->Stats[EStat::Health] / StatsComp->Stats[EStat::MaxHealth];
 }
 
+float  AShooter::GetStaminaPercent() const
+{
+	return StatsComp->Stats[EStat::Stamina] / StatsComp->Stats[EStat::MaxStamina];
+}
+
+void AShooter::PlayHurtAnim()
+{
+
+	PlayAnimMontage(HurtAnimMontage);
+}
 
 // Called every frame
 float AShooter::GetDamage()

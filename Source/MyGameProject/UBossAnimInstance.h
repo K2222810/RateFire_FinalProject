@@ -27,4 +27,5 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsCharging{ false };
 
+
 };

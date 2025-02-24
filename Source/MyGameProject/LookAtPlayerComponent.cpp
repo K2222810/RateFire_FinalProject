@@ -38,29 +38,23 @@ void ULookAtPlayerComponent::TickComponent(float DeltaTime, ELevelTick TickType,
 	APlayerController* PlayerController{
 		GetWorld()->GetFirstPlayerController()
 	};
+	if (!PlayerController) { return; }
+	
 	APawn* PlayerPawn{ PlayerController->GetPawn() };
+	if (!PlayerPawn) { return; }
+
 	FVector PlayerLocation{ PlayerPawn->GetActorLocation() };
 
-	FRotator DesiredRotation{
-		UKismetMathLibrary::FindLookAtRotation(
-			OwnerLocation, PlayerLocation
-		)
-	};
+	FRotator DesiredRotation{UKismetMathLibrary::FindLookAtRotation(OwnerLocation, PlayerLocation)};
+	
 	FRotator CurrentRotation{ OwnerRef->GetActorRotation() };
 
-	FRotator NewRotation{
-		UKismetMathLibrary::RInterpTo_Constant(
-			CurrentRotation,
-			DesiredRotation,
-			DeltaTime,
-			Speed
-		)
-	};
+	FRotator NewRotation{UKismetMathLibrary::RInterpTo_Constant(CurrentRotation,DesiredRotation,DeltaTime,Speed)};
 
-	FRotator NewYawOnlyRotation{
-		CurrentRotation.Pitch, NewRotation.Yaw, CurrentRotation.Roll
-	};
+	FRotator NewYawOnlyRotation{CurrentRotation.Pitch, NewRotation.Yaw, CurrentRotation.Roll};
 
 	OwnerRef->SetActorRotation(NewYawOnlyRotation);
+
+
 }
 

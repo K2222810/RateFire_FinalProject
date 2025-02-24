@@ -12,6 +12,13 @@ DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
 	float, Cost
 );
 
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
+	FOnRollSignature,
+	UPlayerActionsComponent, OnRollDelegate,
+	float, Cost
+);
+
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class MYGAMEPROJECT_API UPlayerActionsComponent : public UActorComponent
@@ -22,6 +29,14 @@ class MYGAMEPROJECT_API UPlayerActionsComponent : public UActorComponent
 
 	class IMainCharacter* IPlayerRef;
 	class UCharacterMovementComponent* MovementComp;
+
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* RollAnimMontage;
+
+	UPROPERTY(EditAnywhere)
+	float RollCost{ 5.0f };
+
+	bool bIsRollActive{ false };
 
 	UPROPERTY(EditAnywhere)
 	float SprintCost{ 0.1f };
@@ -39,6 +54,8 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnSprintSignature OnSprintDelegate;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnRollSignature OnRollDelegate;
 
 protected:
 	// Called when the game starts
@@ -53,5 +70,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void Walk();
-		
+
+	UFUNCTION(BlueprintCallable)
+	void Roll();
+
+	UFUNCTION()
+	void FinishRollAnim();
+
 };

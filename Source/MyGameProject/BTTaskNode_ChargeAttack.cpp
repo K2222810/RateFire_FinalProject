@@ -5,6 +5,9 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Navigation/PathFollowingComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "EEnemyState.h"	
+
+	
 
 void UBTTaskNode_ChargeAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
@@ -25,23 +28,28 @@ void UBTTaskNode_ChargeAttack::TickTask(UBehaviorTreeComponent& OwnerComp, uint8
 
 	if (!bIsFinished) { return; }
 
+	OwnerComp.GetBlackboardComponent()->SetValueAsEnum(
+		TEXT("CurrentState"), EEnemyState::Melee
+	);
+
 	ControllerRef->ReceiveMoveCompleted.Remove(MoveCompletedDelegate);
 
 	FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-
 }
 
 UBTTaskNode_ChargeAttack::UBTTaskNode_ChargeAttack()
 {
 	bNotifyTick = true;
 
+	// Create a unique instance of this node for each AI
+	bCreateNodeInstance = true;
+	
 	MoveCompletedDelegate.BindUFunction(
 		this, "HandleMoveCompleted"
 	);
-
 }
 
-EBTNodeResult::Type UBTTaskNode_ChargeAttack::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory)
+EBTNodeResult::Type UBTTaskNode_ChargeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	ControllerRef = OwnerComp.GetAIOwner();
 	CharacterRef = ControllerRef->GetCharacter();
@@ -59,6 +67,7 @@ EBTNodeResult::Type UBTTaskNode_ChargeAttack::ExecuteTask(UBehaviorTreeComponent
 	bIsFinished = false;
 
 	return EBTNodeResult::InProgress;
+
 }
 
 void UBTTaskNode_ChargeAttack::ChargeAtPlayer()
@@ -82,13 +91,10 @@ void UBTTaskNode_ChargeAttack::ChargeAtPlayer()
 
 	CharacterRef->GetCharacterMovement()
 		->MaxWalkSpeed = ChargeWalkSpeed;
-
-
 }
 
 void UBTTaskNode_ChargeAttack::HandleMoveCompleted()
 {
-
 	BossAnim->bIsCharging = false;
 
 	FTimerHandle AttackTimerHandle;
@@ -103,15 +109,10 @@ void UBTTaskNode_ChargeAttack::HandleMoveCompleted()
 
 	CharacterRef->GetCharacterMovement()
 		->MaxWalkSpeed = OriginalWalkSpeed;
-
-
-
 }
 
 void UBTTaskNode_ChargeAttack::FinishAttackTask()
 {
-
 	bIsFinished = true;
-
-	UE_LOG(LogTemp, Warning, TEXT("Task Finished!"));
 }
+

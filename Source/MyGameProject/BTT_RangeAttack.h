@@ -20,6 +20,7 @@ class MYGAMEPROJECT_API UBTT_RangeAttack : public UBTTaskNode
 	double Threshold{ 0.9 };
 
 public:
+	UBTT_RangeAttack();
 	virtual EBTNodeResult::Type ExecuteTask(
 		UBehaviorTreeComponent& OwnerComp,
 		uint8* NodeMemory

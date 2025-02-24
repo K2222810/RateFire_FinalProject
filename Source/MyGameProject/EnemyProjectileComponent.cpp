@@ -3,7 +3,7 @@
 
 #include "EnemyProjectileComponent.h"
 #include "Kismet/KismetMathLibrary.h"
-
+#include "Shooter.h"
 // Sets default values for this component's properties
 UEnemyProjectileComponent::UEnemyProjectileComponent()
 {
@@ -34,6 +34,8 @@ void UEnemyProjectileComponent::TickComponent(float DeltaTime, ELevelTick TickTy
 
 void UEnemyProjectileComponent::SpawnProjectile(FName ComponentName, TSubclassOf<AActor> ProjectileClass)
 {
+	if (IsDead()) { return; }
+	
 	USceneComponent* SpawnPointComp{
 		Cast<USceneComponent>(GetOwner()->GetDefaultSubobjectByName(ComponentName))
 	};
@@ -44,7 +46,7 @@ void UEnemyProjectileComponent::SpawnProjectile(FName ComponentName, TSubclassOf
 		->GetPawn()
 		->GetActorLocation()
 	};
-
+	
 	FRotator SpawnRotation{
 		UKismetMathLibrary::FindLookAtRotation(
 			SpawnLocation, PlayerLocation
@@ -58,4 +60,16 @@ void UEnemyProjectileComponent::SpawnProjectile(FName ComponentName, TSubclassOf
 	);
 
 
+}
+
+bool UEnemyProjectileComponent::IsDead() const
+{
+	AShooter* ControlledCharacter = Cast<AShooter>(GetWorld()->GetFirstPlayerController()
+		->GetPawn());
+	if (ControlledCharacter != nullptr)
+	{
+		return ControlledCharacter->IsDead();
+	}
+
+	return true;
 }

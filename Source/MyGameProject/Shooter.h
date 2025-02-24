@@ -40,6 +40,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UPlayerActionsComponent* PlayerActionsComp;
 
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* HurtAnimMontage;
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -54,6 +58,9 @@ public:
 
 	UFUNCTION(BlueprintPure)
 	float GetHealthPercent() const;
+
+	UFUNCTION(BlueprintPure)
+	float GetStaminaPercent() const;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -73,8 +80,6 @@ public:
 
 	void SwapUp(float slot);
 	
-
-
 	UPROPERTY(EditAnywhere, Category = "Sensitivity")
 	float RotationRate = 10;
 
@@ -87,8 +92,10 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AGun> GunClass[3];
 
-
 	
+	UFUNCTION(BlueprintCallable)
+	void PlayHurtAnim();
+
 
 	virtual float GetDamage() override;
 

@@ -8,6 +8,9 @@
 UBTTaskNode_Shoot::UBTTaskNode_Shoot()
 {
     NodeName = "Shoot";
+
+    // Create a unique instance of this node for each AI
+    bCreateNodeInstance = true;
 }
 
 EBTNodeResult::Type UBTTaskNode_Shoot::ExecuteTask(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory) 

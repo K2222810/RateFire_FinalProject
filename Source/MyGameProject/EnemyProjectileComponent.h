@@ -30,4 +30,6 @@ public:
 		FName ComponentName, TSubclassOf<AActor> ProjectileClass
 	);
 
+	bool IsDead() const;
+
 };

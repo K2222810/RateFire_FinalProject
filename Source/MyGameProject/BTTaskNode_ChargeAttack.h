@@ -24,19 +24,21 @@ class MYGAMEPROJECT_API UBTTaskNode_ChargeAttack : public UBTTaskNode
 	float AcceptableRadius{ 100.0f };
 
 	FScriptDelegate MoveCompletedDelegate;
-	
+
 	float OriginalWalkSpeed;
 
 	UPROPERTY(EditAnywhere)
-	float ChargeWalkSpeed{ 2000.0f };	
+	float ChargeWalkSpeed{ 2000.0f };
 
 	bool bIsFinished{ false };
 
+
+
 protected:
-		virtual void TickTask ( 
-			UBehaviorTreeComponent & OwnerComp,  
-			uint8* NodeMemory, 
-			float DeltaSeconds 
+	virtual void TickTask(
+		UBehaviorTreeComponent& OwnerComp,
+		uint8* NodeMemory,
+		float DeltaSeconds
 	) override;
 
 public:
@@ -54,5 +56,7 @@ public:
 
 	UFUNCTION()
 	void FinishAttackTask();
-	
 };
+
+	
+

@@ -11,7 +11,7 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class MYGAMEPROJECT_API ULookAtPlayerComponent : public UActorComponent
 {
 	GENERATED_BODY()
-
+	
 	UPROPERTY(EditAnywhere)
 	float Speed{ 400.0f };
 

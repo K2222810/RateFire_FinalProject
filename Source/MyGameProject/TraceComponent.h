@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "FTraceSockets.h"
 #include "TraceComponent.generated.h"
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -15,13 +17,7 @@ class MYGAMEPROJECT_API UTraceComponent : public UActorComponent
 
 	USkeletalMeshComponent* skeletalComp;
 	UPROPERTY(EditAnywhere)
-	FName Start;
-
-	UPROPERTY(EditAnywhere)
-	FName End;
-
-	UPROPERTY(EditAnywhere)
-	FName Rotation;
+	TArray<FTraceSockets> Sockets;
 
 	UPROPERTY(EditAnywhere)
 	double BoxCollisionLength{ 30.0 };

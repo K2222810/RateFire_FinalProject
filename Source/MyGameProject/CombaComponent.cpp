@@ -15,13 +15,12 @@ UCombaComponent::UCombaComponent()
 
 
 // Called when the game starts
+// Called when the game starts
 void UCombaComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	CharacterRef = GetOwner<ACharacter>();
-	// ...
-
 }
 
 
@@ -34,8 +33,7 @@ void UCombaComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 }
 
 void UCombaComponent::ComboAttack()
-{	
-
+{
 	if (CharacterRef->Implements<UMainCharacter>())
 	{
 		IMainCharacter* IPlayerRef{ Cast<IMainCharacter>(CharacterRef) };
@@ -46,17 +44,15 @@ void UCombaComponent::ComboAttack()
 		}
 	}
 
-	if (!bPlayerCanAttack) { return; }
+	if (!bCanAttack) { return; }
 
-	bPlayerCanAttack = false;
-	
-	CharacterRef->PlayAnimMontage(AttackAnimation[ComboCounter]);
+	bCanAttack = false;
 
-
+	CharacterRef->PlayAnimMontage(AttackAnimations[ComboCounter]);
 
 	ComboCounter++;
 
-	int MaxCombo{ AttackAnimation.Num() };
+	int MaxCombo{ AttackAnimations.Num() };
 
 	ComboCounter = UKismetMathLibrary::Wrap(
 		ComboCounter,
@@ -69,5 +65,17 @@ void UCombaComponent::ComboAttack()
 
 void UCombaComponent::HandleResetAttack()
 {
-	bPlayerCanAttack = true;
+	bCanAttack = true;
 }
+
+void UCombaComponent::RandomAttack()
+{
+	int RandomIndex{
+		FMath::RandRange(0, AttackAnimations.Num() - 1)
+	};
+
+	AnimDuration = CharacterRef
+		->PlayAnimMontage(AttackAnimations[RandomIndex]);
+}
+
+

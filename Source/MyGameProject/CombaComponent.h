@@ -18,7 +18,7 @@ class MYGAMEPROJECT_API UCombaComponent : public UActorComponent
 	GENERATED_BODY()
 
 	UPROPERTY(EditAnywhere)
-	TArray<UAnimMontage*> AttackAnimation;
+	TArray<UAnimMontage*> AttackAnimations;
 
 	ACharacter* CharacterRef;
 
@@ -26,10 +26,10 @@ class MYGAMEPROJECT_API UCombaComponent : public UActorComponent
 	int ComboCounter{ 0 };
 
 	UPROPERTY(VisibleAnywhere)
-	bool bPlayerCanAttack{ true };
+	bool bCanAttack{ true };
 
 	UPROPERTY(EditAnywhere)
-	float StaminaCost{ 5.0 };
+	float StaminaCost{ 5.0f };
 
 public:
 	// Sets default values for this component's properties
@@ -38,7 +38,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnAttackPerformedSignature OnAttackPerformedDelegate;
 
-
+	float AnimDuration;
 
 protected:
 	// Called when the game starts
@@ -53,5 +53,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void HandleResetAttack();
+
+	void RandomAttack();
+
 		
 };
