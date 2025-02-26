@@ -38,7 +38,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UCombaComponent* CombatComp;
 
-
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class UTraceComponent* TraceComp;
 
@@ -79,5 +78,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayHurtAnim();
 	
+
 
 };

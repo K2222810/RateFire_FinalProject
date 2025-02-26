@@ -120,6 +120,13 @@ bool AGun::HasAmmo(int32 Amunition)
 	}
 } 
 
+void AGun::ReloadAmmo()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Reloading"));	
+
+	Ammo = DefaultAmmo;
+	
+}
 
 
 

@@ -62,6 +62,8 @@ public:
 	UFUNCTION(BlueprintPure)
 	float GetStaminaPercent() const;
 
+	
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -96,9 +98,17 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayHurtAnim(TSubclassOf<class UCameraShakeBase> CameraShakeTemplate);
 
+	UFUNCTION(BlueprintCallable)
+	void Reload();
+
+	UFUNCTION(BlueprintCallable)
+	float GetAmmo() const;
+
+	UFUNCTION(BlueprintCallable)
+	float GetDefaultAmmo() const;
+
 
 	virtual float GetDamage() override;
-
 
 	virtual bool HasEnoughStamina(float Cost) override;
 

@@ -26,8 +26,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UPROPERTY(EditAnywhere)
-	int32 Ammo = 30;
+	int32 DefaultAmmo = 30;
 	
+	int32 Ammo = DefaultAmmo;
+
+	void ReloadAmmo();
+
 private:
 	UPROPERTY(VisibleAnywhere)
 	USceneComponent* Root;
@@ -56,7 +60,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	float Damage = 10;
-
 	
 
 	bool HasAmmo(int32 Amunition); 

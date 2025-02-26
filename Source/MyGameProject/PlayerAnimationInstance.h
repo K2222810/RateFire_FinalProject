@@ -21,7 +21,7 @@ protected:
 	void UpdateVelocity();
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool bIsInCombat{ false };
-
+	
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float CurrentDirection{ 0.0f };
 
@@ -35,4 +35,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bIsBlocking{ false };
 	
+
+
+
 };

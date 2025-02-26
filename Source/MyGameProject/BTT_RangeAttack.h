@@ -17,6 +17,14 @@ class MYGAMEPROJECT_API UBTT_RangeAttack : public UBTTaskNode
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* AnimMontage;
 
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* RoarSound;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* RoarAttackSound;
+
+
 	double Threshold{ 0.9 };
 
 public:

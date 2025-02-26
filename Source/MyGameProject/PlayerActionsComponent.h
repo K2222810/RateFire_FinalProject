@@ -18,6 +18,13 @@ DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(
 	float, Cost
 );
 
+DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE(
+	FOnReloadSignature,
+	UPlayerActionsComponent,
+	OnReloadDelegate
+);
+
+
 
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -32,6 +39,9 @@ class MYGAMEPROJECT_API UPlayerActionsComponent : public UActorComponent
 
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* RollAnimMontage;
+
+	UPROPERTY(EditAnywhere)
+	UAnimMontage* ReloadAnimMontage;
 
 	UPROPERTY(EditAnywhere)
 	float RollCost{ 5.0f };
@@ -57,6 +67,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FOnRollSignature OnRollDelegate;
 
+	UPROPERTY(BlueprintAssignable)
+	FOnReloadSignature OnReloadDelegate;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -77,6 +90,15 @@ public:
 	UFUNCTION()
 	void FinishRollAnim();
 
+	UFUNCTION(BlueprintCallable)
+	void Reload();
+
+	UFUNCTION()
+	void FinishRealodAnim();
+
+
 	bool bIsRollActive{ false };
+
+	bool bIsReloading{ false };
 
 };

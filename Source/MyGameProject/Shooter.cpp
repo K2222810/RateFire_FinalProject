@@ -171,6 +171,24 @@ float  AShooter::GetStaminaPercent() const
 	return StatsComp->Stats[EStat::Stamina] / StatsComp->Stats[EStat::MaxStamina];
 }
 
+void AShooter::Reload()
+{
+	CurrentGun[ActiveIndex]->ReloadAmmo();	
+}	
+
+float AShooter::GetAmmo() const
+{	
+
+
+	return CurrentGun[ActiveIndex]->Ammo;
+}
+
+float AShooter::GetDefaultAmmo() const
+{
+
+	return CurrentGun[ActiveIndex]->DefaultAmmo;
+}
+
 void AShooter::PlayHurtAnim(TSubclassOf<class UCameraShakeBase> CameraShakeTemplate)
 {
 
@@ -202,3 +220,5 @@ bool AShooter::CanTakeDamage(AActor* Opponent)
 	if (PlayerActionsComp->bIsRollActive) { return false; }
 	return true;
 }
+
+

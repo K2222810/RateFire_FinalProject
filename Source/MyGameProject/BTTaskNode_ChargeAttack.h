@@ -33,6 +33,12 @@ class MYGAMEPROJECT_API UBTTaskNode_ChargeAttack : public UBTTaskNode
 	bool bIsFinished{ false };
 
 
+	UPROPERTY(EditAnywhere)
+	USoundBase* RoarSound;
+
+	UPROPERTY(EditAnywhere)
+	USoundBase* RoarAttackSound;
+
 
 protected:
 	virtual void TickTask(

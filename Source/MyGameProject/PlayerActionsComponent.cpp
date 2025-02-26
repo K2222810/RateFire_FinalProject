@@ -102,3 +102,30 @@ void UPlayerActionsComponent::FinishRollAnim()
 	bIsRollActive = false;
 }
 
+void UPlayerActionsComponent::Reload()
+{
+	if (bIsReloading)
+	{
+		return;
+	}
+
+	bIsReloading = true;
+
+	OnReloadDelegate.Broadcast();
+
+	float Duration{ CharacterRef->PlayAnimMontage(ReloadAnimMontage) };
+	FTimerHandle ReloadTimerHandle;
+
+	CharacterRef->GetWorldTimerManager().SetTimer(
+		ReloadTimerHandle,
+		this,
+		&UPlayerActionsComponent::FinishRealodAnim,
+		Duration,
+		false
+	);
+}
+
+void UPlayerActionsComponent::FinishRealodAnim()
+{
+	bIsReloading = false;
+}
