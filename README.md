@@ -1,8 +1,8 @@
 # RateFire Final Project
 A final project built around a complete application idea with structured planning and implementation.
 
-## Screenshot/Logo
-Add a screenshot here.
+## Game showcase 
+https://www.youtube.com/watch?v=msiWj2yJwKQ&source_ve_path=MjM4NTE&embeds_referring_euri=https%3A%2F%2Falejandro-portf.netlify.app%2F
 
 ## Description
 RateFire Final Project appears to be a larger project built to bring together a range of development skills into one complete application. It was a useful way to practice project structure, feature planning, and developing a more polished product from start to finish.
